@@ -5,13 +5,10 @@ if [ "$DD_GIT_BRANCH" = "" ] ; then
   export DD_GIT_BRANCH="$(git rev-parse HEAD | xargs git name-rev | cut -d' ' -f2 | sed 's/remotes\/origin\///g')";
 fi
 
-export DD_GIT_CLEAN_BRANCH="$(echo $DD_GIT_BRANCH | tr '/' '.')"
-export DD_GIT_ESCAPED_BRANCH="$(echo $DD_GIT_CLEAN_BRANCH | sed -e 's/[]\/$*.^[]/\\\\&/g')"
 export DD_GIT_MESSAGE="$(git log -1 --pretty=%B)"
 export DD_GIT_AUTHOR="$(git log -1 --pretty=%an)"
 export DD_GIT_AUTHOR_EMAIL="$(git log -1 --pretty=%ae)"
 export DD_GIT_COMMIT="$(git log -1 --pretty=%H)"
-export DD_GIT_SHORT_COMMIT="$(git log -1 --pretty=%h)"
 export DD_GIT_TAG="$(git describe --tags --exact-match 2>/dev/null)"
 export DD_GIT_MOST_RECENT_TAG="$(git describe --tags --abbrev=0)"
 
@@ -21,14 +18,10 @@ if [ "${DD_GIT_BRANCH#pr-}" != "$DD_GIT_BRANCH" ] ; then
 fi
 
 echo "==> AWS CodeBuild Extra Environment Variables:"
-echo "==> DD_ACCOUNT_ID = $DD_ACCOUNT_ID"
 echo "==> DD_GIT_AUTHOR = $DD_GIT_AUTHOR"
 echo "==> DD_GIT_AUTHOR_EMAIL = $DD_GIT_AUTHOR_EMAIL"
 echo "==> DD_GIT_BRANCH = $DD_GIT_BRANCH"
-echo "==> DD_GIT_CLEAN_BRANCH = $DD_GIT_CLEAN_BRANCH"
-echo "==> DD_GIT_ESCAPED_BRANCH = $DD_GIT_ESCAPED_BRANCH"
 echo "==> DD_GIT_COMMIT = $DD_GIT_COMMIT"
-echo "==> DD_GIT_SHORT_COMMIT = $DD_GIT_SHORT_COMMIT"
 echo "==> DD_GIT_MESSAGE = $DD_GIT_MESSAGE"
 echo "==> DD_GIT_TAG = $DD_GIT_TAG"
 echo "==> DD_GIT_MOST_RECENT_TAG = $DD_GIT_MOST_RECENT_TAG"
